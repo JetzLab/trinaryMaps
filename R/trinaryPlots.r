@@ -50,7 +50,12 @@ trinaryMapPlot=function(trinary.rasters,
 		}
 		if(!is.null(pres)) points(pres,col='grey90',pch='+',cex=.4)
 		if(!is.null(expertShpPath)) {
-			 tmp=rgdal::readOGR(paste0(expertShpPath,'.shp'),verbose=F)
+			 # this structure assumes all the expert maps are in one directory
+			 if(file.exists(paste0(expertShpPath,'.shp'))) {
+			 	tmp=rgdal::readOGR(paste0(expertShpPath,'.shp'),verbose=F)
+		 	} else {
+		 		tmp=rgdal::readOGR(expertShpPath, verbose=F)
+		 	}
 			 projection(tmp)=projection(trinary.rasters)
 			 plot(tmp,add=T,border="black",col=grey(.6,.3),lwd=.9)
 		}
